@@ -5,10 +5,9 @@ import { auth } from "./firebase/firebase";
 
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import Registration from "./components/Registration";
 import Dashboard from "./components/Dashboard";
 import DarkModeToggle from "./components/DarkModeToggle";
-import PageWrapper from "./components/pageWrapper";
+import PageWrapper from "./components/PageWrapper";
 
 function App() {
   const [user, setUser] = useState(null);
