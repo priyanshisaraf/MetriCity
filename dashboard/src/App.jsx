@@ -23,7 +23,7 @@ function App() {
   const timeoutId = setTimeout(() => {
     console.warn("Auth state check timeout – proceeding without Firebase response");
     setCheckingAuth(false);
-  }, 5000); // 5 seconds fallback
+  }, 3000); // 3 seconds fallback
 
   const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
     console.log("🔥 onAuthStateChanged callback:", firebaseUser);
