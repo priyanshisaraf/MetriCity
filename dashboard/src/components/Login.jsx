@@ -96,7 +96,7 @@ function Login() {
 
         <p className="mt-4 text-center text-sm">
           New User?{' '}
-          <Link href="/signup" className="text-blue-600 hover:underline">
+          <Link to="/signup" className="text-blue-600 hover:underline">
             Sign up
           </Link>
         </p>
