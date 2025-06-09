@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate,Link } from "react-router-dom";
+import Dashboard from './Dashboard';
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -51,7 +51,7 @@ function Login() {
   };
 
   if (isLoggedIn) {
-    return <Page2 />;
+    return <Dashboard />;
   }
 
   return (
@@ -96,9 +96,9 @@ function Login() {
 
         <p className="mt-4 text-center text-sm">
           New User?{' '}
-          <a href="/signup" target="_blank" className="text-blue-600 hover:underline">
+          <Link href="/signup" target="_blank" className="text-blue-600 hover:underline">
             Sign up
-          </a>
+          </Link>
         </p>
       </form>
     </div>
