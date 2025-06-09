@@ -1,0 +1,123 @@
+{
+  "global_defaults": {
+    "child": {
+      "aqi": 100,
+      "temp_max": 35,
+      "humidity_max": 70
+    },
+    "adult": {
+      "aqi": 120,
+      "temp_max": 40,
+      "humidity_max": 70
+    },
+    "elderly": {
+      "aqi": 100,
+      "temp_max": 35,
+      "humidity_max": 65
+    }
+  },
+  "city_overrides": {
+    "delhi": {
+      "child": {
+        "aqi": 100,
+        "temp_max": 38.95,
+        "humidity_max": 65
+      },
+      "adult": {
+        "aqi": 120,
+        "temp_max": 42.22,
+        "humidity_max": 70
+      },
+      "elderly": {
+        "aqi": 100,
+        "temp_max": 38.95,
+        "humidity_max": 60
+      }
+    },
+    "mumbai": {
+      "child": {
+        "aqi": 100,
+        "temp_max": 35,
+        "humidity_max": 75
+      },
+      "adult": {
+        "aqi": 120,
+        "temp_max": 35,
+        "humidity_max": 75
+      },
+      "elderly": {
+        "aqi": 100,
+        "temp_max": 35,
+        "humidity_max": 70
+      }
+    },
+    "kolkata": {
+      "child": {
+        "aqi": 100,
+        "temp_max": 35,
+        "humidity_max": 80
+      },
+      "adult": {
+        "aqi": 120,
+        "temp_max": 38,
+        "humidity_max": 80
+      },
+      "elderly": {
+        "aqi": 100,
+        "temp_max": 35,
+        "humidity_max": 75
+      }
+    },
+    "chennai": {
+      "child": {
+        "aqi": 100,
+        "temp_max": 35,
+        "humidity_max": 75
+      },
+      "adult": {
+        "aqi": 120,
+        "temp_max": 38,
+        "humidity_max": 75
+      },
+      "elderly": {
+        "aqi": 100,
+        "temp_max": 35,
+        "humidity_max": 70
+      }
+    },
+    "bengaluru": {
+      "child": {
+        "aqi": 100,
+        "temp_max": 33,
+        "humidity_max": 70
+      },
+      "adult": {
+        "aqi": 120,
+        "temp_max": 35,
+        "humidity_max": 70
+      },
+      "elderly": {
+        "aqi": 100,
+        "temp_max": 33,
+        "humidity_max": 65
+      }
+    },
+    "hyderabad": {
+      "child": {
+        "aqi": 100,
+        "temp_max": 36,
+        "humidity_max": 65
+      },
+      "adult": {
+        "aqi": 120,
+        "temp_max": 40,
+        "humidity_max": 65
+      },
+      "elderly": {
+        "aqi": 100,
+        "temp_max": 36,
+        "humidity_max": 60
+      }
+    }
+  }
+}
