@@ -13,6 +13,9 @@ import PageWrapper from "./components/pageWrapper";
 function App() {
   const [user, setUser] = useState(null);
   const [checkingAuth, setCheckingAuth] = useState(true);
+  useEffect(() => {
+  document.title = "MetriCity";
+}, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
