@@ -16,35 +16,21 @@ export default function Dashboard({ user }) {
   useEffect(() => {
     const checkAndRegisterUser = async () => {
       try {
-        const res = await fetch("https://clsjsh11ug.execute-api.ap-south-1.amazonaws.com/dev/CheckUserRegistered", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: user.email }),
-        });
-        const data = await res.json();
-        setIsRegistered(data.registered);
+  const res = await fetch("https://clsjsh11ug.execute-api.ap-south-1.amazonaws.com/dev/CheckUserRegistered", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: user.email }),
+  });
+  const data = await res.json();
+  
+  setIsRegistered(data.registered); 
 
-        if (!data.registered) {
-          await fetch("https://rqbgqjaw37.execute-api.ap-south-1.amazonaws.com/dev/RegisterUserHandler", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: user.email,
-              city: "chennai",
-              ageGroup: "adult",
-              mode: "auto",
-            }),
-          });
-
-          setIsRegistered(true);
-        }
-
-        if (data.user?.city) {
-          setUserCity(data.user.city);
-        }
-      } catch (err) {
-        console.error("Error checking or registering user:", err);
-      }
+  if (data.user?.city) {
+    setUserCity(data.user.city);
+  }
+} catch (err) {
+  console.error("Error checking user registration:", err);
+}
     };
 
     if (user?.email) checkAndRegisterUser();
