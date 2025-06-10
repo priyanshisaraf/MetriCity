@@ -14,6 +14,9 @@ export default function Dashboard({ user }) {
   const weatherApiKey = import.meta.env.VITE_WEATHER_API_KEY;
   const aqiApiKey = import.meta.env.VITE_AQI_API_KEY;
   useEffect(() => {
+  console.log("DEBUG STATE:", { isRegistered, userCity, weather, aqi });
+}, [isRegistered, userCity, weather, aqi]);
+  useEffect(() => {
     const checkAndRegisterUser = async () => {
       try {
   const res = await fetch("https://clsjsh11ug.execute-api.ap-south-1.amazonaws.com/dev/CheckUserRegistered", {
@@ -82,14 +85,32 @@ export default function Dashboard({ user }) {
     setIsRegistered(true);
     window.location.reload();
   };
+console.log("State check:", { isRegistered, weather, aqi });
 
-  if (!weather || aqi === null || isRegistered === null) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-        Loading dashboard...
-      </div>
-    );
-  }
+  if (isRegistered === null) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+      Checking registration status...
+    </div>
+  );
+}
+
+if (!isRegistered) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+      <RegistrationForm email={user.email} onSuccess={handleRegistrationSuccess} />
+    </div>
+  );
+}
+
+if (!weather || aqi === null) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+      Loading dashboard...
+    </div>
+  );
+}
+
 
 const {
   main,

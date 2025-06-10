@@ -110,7 +110,7 @@ export default function RegistrationForm({ email, onSuccess }) {
         <div className="space-y-2">
           <label
             htmlFor="alertEmail"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-100"
           >
             Alert Email *
           </label>
@@ -121,12 +121,12 @@ export default function RegistrationForm({ email, onSuccess }) {
             value={form.alertEmail}
             onChange={handleInputChange}
             required
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-100">
             City *
           </label>
           <Select
@@ -140,7 +140,7 @@ export default function RegistrationForm({ email, onSuccess }) {
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-100">
             Age Group
           </label>
           <Select
@@ -153,7 +153,7 @@ export default function RegistrationForm({ email, onSuccess }) {
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-100">
             Alert Mode
           </label>
           <Select
@@ -168,7 +168,7 @@ export default function RegistrationForm({ email, onSuccess }) {
         {form.mode.value === "manual" && (
           <div className="space-y-4 border-t pt-4 dark:border-gray-600">
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-100">
                 AQI Threshold
               </label>
               <input
@@ -177,12 +177,12 @@ export default function RegistrationForm({ email, onSuccess }) {
                 value={form.aqi}
                 onChange={handleInputChange}
                 placeholder="e.g. 150"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-100">
                 Temperature Threshold (°C)
               </label>
               <input
@@ -191,12 +191,12 @@ export default function RegistrationForm({ email, onSuccess }) {
                 value={form.temp}
                 onChange={handleInputChange}
                 placeholder="e.g. 40"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-100">
                 Humidity Threshold (%)
               </label>
               <input
@@ -205,7 +205,7 @@ export default function RegistrationForm({ email, onSuccess }) {
                 value={form.humidity}
                 onChange={handleInputChange}
                 placeholder="e.g. 70"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>

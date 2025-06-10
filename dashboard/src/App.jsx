@@ -6,7 +6,6 @@ import { auth } from "./firebase/firebase";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
-import DarkModeToggle from "./components/DarkModeToggle";
 import PageWrapper from "./components/PageWrapper";
 
 function App() {
@@ -44,7 +43,6 @@ function App() {
 
   return (
     <Router>
-      <DarkModeToggle />
       <Routes>
         <Route
           path="/"
@@ -72,7 +70,7 @@ function App() {
             !user ? (
               <PageWrapper><SignUp /></PageWrapper>
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/" />
             )
           }
         />
