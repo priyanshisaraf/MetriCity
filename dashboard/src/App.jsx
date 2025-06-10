@@ -72,7 +72,7 @@ function App() {
             !user ? (
               <PageWrapper><SignUp /></PageWrapper>
             ) : (
-              <Navigate to="/" />
+              <Navigate to="/login" />
             )
           }
         />
