@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase";
-
+import Home from "./components/Home";
+import DemoDashboard from "./components/DemoDashboard"; // optional, mocked data
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
@@ -44,38 +45,25 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            user ? (
-              <PageWrapper><Dashboard user={user} /></PageWrapper>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            !user ? (
-              <PageWrapper><Login /></PageWrapper>
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            !user ? (
-              <PageWrapper><SignUp /></PageWrapper>
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+  <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+
+  <Route
+    path="/dashboard"
+    element={
+      user ? (
+        <PageWrapper><Dashboard user={user} /></PageWrapper>
+      ) : (
+        <Navigate to="/" />
+      )
+    }
+  />
+
+  <Route path="/login" element={!user ? <PageWrapper><Login /></PageWrapper> : <Navigate to="/dashboard" />} />
+  <Route path="/signup" element={!user ? <PageWrapper><SignUp /></PageWrapper> : <Navigate to="/dashboard" />} />
+
+  <Route path="/demo" element={<PageWrapper><DemoDashboard /></PageWrapper>} />
+  <Route path="*" element={<Navigate to="/" />} />
+</Routes>
     </Router>
   );
 }

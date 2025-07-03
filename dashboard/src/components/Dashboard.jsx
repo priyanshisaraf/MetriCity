@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../firebase/firebase";
 import { signOut } from "firebase/auth";
 import RegistrationForm from "./Registration";
-import DarkModeToggle from "./DarkModeToggle";
+import { useNavigate } from "react-router-dom";
 import MapEmbed from "./MapEmbed";
 export default function Dashboard({ user }) {
   const [isRegistered, setIsRegistered] = useState(null);
@@ -44,17 +44,23 @@ export default function Dashboard({ user }) {
       if (!userCity) return;
 
       try {
-        const res = await fetch("https://fjigw7et5i.execute-api.ap-south-1.amazonaws.com/dev/trigger-alerts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ city: userCity }),
-        });
-        const result = await res.json();
-        setAlertMessage(result.message || "No alerts required right now.");
-      } catch (err) {
-        console.error("Failed to trigger alerts:", err);
-        setAlertMessage("Unable to determine alert status.");
-      }
+  const res = await fetch("https://fjigw7et5i.execute-api.ap-south-1.amazonaws.com/dev/trigger-alerts", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ city: userCity }),
+  });
+
+  console.log("Response:", res);
+
+  const result = await res.json();
+  console.log("Parsed Result:", result);
+
+  setAlertMessage(result.message || "No alerts required right now.");
+} catch (err) {
+  console.error("Fetch failed:", err);
+  setAlertMessage("Unable to determine alert status.");
+}
+
     };
 
     checkConditionsAndAlert();
@@ -79,8 +85,9 @@ export default function Dashboard({ user }) {
 
     fetchConditions();
   }, [userCity, weatherApiKey, aqiApiKey]);
-
-  const handleLogout = () => signOut(auth);
+const navigate = useNavigate();
+  const handleLogout = () => signOut(auth).then(() => navigate("/"))
+    .catch((err) => console.error("Logout error:", err));
   const handleRegistrationSuccess = () => {
     setIsRegistered(true);
     window.location.reload();
@@ -89,7 +96,7 @@ console.log("State check:", { isRegistered, weather, aqi });
 
   if (isRegistered === null) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-800 text-gray-200">
       Checking registration status...
     </div>
   );
@@ -97,7 +104,7 @@ console.log("State check:", { isRegistered, weather, aqi });
 
 if (!isRegistered) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-200">
       <RegistrationForm email={user.email} onSuccess={handleRegistrationSuccess} />
     </div>
   );
@@ -105,11 +112,19 @@ if (!isRegistered) {
 
 if (!weather || aqi === null) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-200">
       Loading dashboard...
     </div>
   );
 }
+const getAqiLabel = (aqi) => {
+  if (aqi <= 50) return "Good";
+  if (aqi <= 100) return "Moderate";
+  if (aqi <= 150) return "Unhealthy for sensitive groups";
+  if (aqi <= 200) return "Unhealthy";
+  if (aqi <= 300) return "Very Unhealthy";
+  return "Hazardous";
+};
 
 
 const {
@@ -122,8 +137,7 @@ const {
 } = weather;
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 px-4 py-5 relative flex flex-col items-center">
-      <DarkModeToggle />
+    <div className="min-h-screen bg-gray-900 text-gray-200 px-4 py-5 relative flex flex-col items-center">
       <div className="text-center space-y-2 mb-6">
       <h1 className="text-6xl leading-tight font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 mb-4">
         MetriCity
@@ -132,53 +146,76 @@ const {
       <p className="text-md">Selected city: <strong>{name}</strong></p>
     </div>
 
-
-      <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-4xl w-full">
-        <div className="bg-gray-100 dark:bg-blue-800 text-gray-900 dark:text-white rounded-lg p-4 shadow transition">
-          <p className="text-lg font-bold">🌡 Temp</p>
-          <p>{main.temp}°C</p>
-          <p className="text-sm">Feels like: {main.feels_like}°C</p>
-        </div>
-        <div className="bg-gray-100 dark:bg-blue-800 text-gray-900 dark:text-white rounded-lg p-4 shadow transition">
-          <p className="text-lg font-bold">💧 Humidity</p>
-          <p>{main.humidity}%</p>
-        </div>
-        <div className="bg-gray-100 dark:bg-blue-800 text-gray-900 dark:text-white rounded-lg p-4 shadow transition">
-          <p className="text-lg font-bold">🌫 AQI</p>
-          <p>{aqi}</p>
-        </div>
-        <div className="bg-gray-100 dark:bg-blue-800 text-gray-900 dark:text-white rounded-lg p-4 shadow transition">
-          <p className="text-lg font-bold">☁️ Clouds</p>
-          <p>{clouds.all}%</p>
-        </div>
-        <div className="bg-gray-100 dark:bg-blue-800 text-gray-900 dark:text-white rounded-lg p-4 shadow transition">
-          <p className="text-lg font-bold">💨 Wind</p>
-          <p>{wind.speed} km/h</p>
-        </div>
-        <div className="bg-gray-100 dark:bg-blue-800 text-gray-900 dark:text-white rounded-lg p-4 shadow transition">
-          <p className="text-lg font-bold">🔭 Visibility</p>
-          <p>{visibility / 1000} km</p>
-        </div>
-        <div className="bg-gray-100 dark:bg-blue-800 text-gray-900 dark:text-white rounded-lg p-4 shadow transition">
-          <p className="text-lg font-bold">🌅 Sunrise</p>
-          <p>{new Date(sys.sunrise * 1000).toLocaleTimeString()}</p>
-        </div>
-        <div className="bg-gray-100 dark:bg-blue-800 text-gray-900 dark:text-white rounded-lg p-4 shadow transition">
-          <p className="text-lg font-bold">🌇 Sunset</p>
-          <p>{new Date(sys.sunset * 1000).toLocaleTimeString()}</p>
-        </div>
-        <div className="bg-gray-100 dark:bg-blue-800 text-gray-900 dark:text-white rounded-lg p-4 shadow transition">
-          <p className="font-semibold text-lg">🌡️ Pressure</p>
-          <p>{main.pressure} hPa</p>
+{/* Weather & AQI Info Cards */}
+<div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl w-full mt-5 px-2">
+  {[
+    {
+      icon: "🌡️",
+      label: "Temperature",
+      value: `${main.temp}°C`,
+      sub: `Feels like ${main.feels_like}°C`,
+    },
+    {
+      icon: "💧",
+      label: "Humidity",
+      value: `${main.humidity}%`,
+    },
+    {
+      icon: "🌫️",
+      label: "Air Quality Index (AQI)",
+      value: aqi,
+      sub: getAqiLabel(aqi),
+    },
+    {
+      icon: "☁️",
+      label: "Cloud Cover",
+      value: `${clouds.all}%`,
+    },
+    {
+      icon: "💨",
+      label: "Wind Speed",
+      value: `${wind.speed} km/h`,
+    },
+    {
+      icon: "🔭",
+      label: "Visibility",
+      value: `${(visibility / 1000).toFixed(1)} km`,
+    },
+    {
+      icon: "🌅",
+      label: "Sunrise",
+      value: new Date(sys.sunrise * 1000).toLocaleTimeString(),
+    },
+    {
+      icon: "🌇",
+      label: "Sunset",
+      value: new Date(sys.sunset * 1000).toLocaleTimeString(),
+    },
+    {
+      icon: "📈",
+      label: "Pressure",
+      value: `${main.pressure} hPa`,
+    },
+  ].map(({ icon, label, value, sub }, idx) => (
+    <div
+      key={idx}
+      className="bg-white/10 bg-gray-800/70 backdrop-blur-lg border border-white/10 border-gray-700 rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300"
+    >
+      <div className="text-lg font-semibold tracking-wide text-gray-400">{icon}  {label}</div>
+      <p className="text-3xl font-bold text-blue-400">{value}</p>
+      {sub && <p className="text-xs mt-1 text-gray-400 italic">{sub}</p>}
+    </div>
+  ))}
 </div>
-      </div>
-      <div className="mt-10 w-full max-w-4xl">
-        <MapEmbed city={userCity} />
-        <div className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg p-3 shadow transition text-center">
-          <h3 className="text-xl font-semibold mb-2">Alerts status</h3>
-          <p>{alertMessage}</p>
-        </div>
-      </div>
+
+<div className="mt-10 w-full max-w-5xl">
+  <MapEmbed city={userCity} />
+
+  <div className="mt-6 bg-yellow-900/30 text-yellow-100 p-3 rounded-xl text-center shadow-md border border-yellow-600">
+    <h3 className="text-lg font-bold mb-2">Alert Status</h3>
+    <p className="text-sm">{alertMessage}</p>
+  </div>
+</div>
 
       <div className="mt-6">
         {!isRegistered ? (
