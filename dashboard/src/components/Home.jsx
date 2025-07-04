@@ -12,7 +12,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <div className="text-center space-y-3.5">
-        <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text leading-tight tracking-tight animate-fade-in">
+        <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text leading-tight md:leading-snug tracking-tight">
           Welcome to MetriCity
         </h1>
         <p className="text-lg md:text-xl max-w-xl mx-auto text-gray-300">
