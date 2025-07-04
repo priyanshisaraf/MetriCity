@@ -1,5 +1,7 @@
-# MetriCity 
-Real-time Environmental Monitoring & Automated Alerting System
+# MetriCity – Real-Time City Pollution & Weather Alerts 
+Real-time environmental dashboard & auto-alerting for Indian cities. Get live AQI, weather stats, and email alerts based on custom thresholds.
+
+![MetriCity Preview](dashboard/public/homepage.png)
 
 [Live Demo →](https://metri-city.vercel.app)
 
