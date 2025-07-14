@@ -39,7 +39,6 @@ MetriCity is a production-grade, full-stack web app that provides **real-time ai
   - Wind speed, pressure, visibility, cloud cover
   - Sunrise/sunset
 - Embedded Google Map view
-- Dark/light mode toggle
 
 ### Fully Automated Alerts
 - AWS Lambda triggered hourly via EventBridge (cron).
